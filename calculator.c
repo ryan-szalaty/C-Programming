@@ -1,14 +1,40 @@
 #include <stdio.h>
 
 int main (void) {
-    int num;
-    int num2;
+    //Define numbers and calculator operation
+    float num;
+    float num2;
+    char operation;
 
-    printf("Input an integer:\n");
-    scanf("%d", &num);
-    printf("Input your second integer:\n");
-    scanf("%d", &num2);
+    //Ask for user input and store in local variables
+    printf("Please input +, -, * or /:\n");
+    scanf("%c", &operation);
+    printf("Input an number:\n");
+    scanf("%f", &num);
+    printf("Input your second number:\n");
+    scanf("%f", &num2);
 
-    printf("%d\n", num + num2);
+    //Perform calculations
+    switch(operation) {
+        case '+':
+            printf("%f", num + num2);
+            break;
+        case '-':
+            printf("%f", num - num2);
+            break;
+        case '*':
+            printf("%f", num * num2);
+            break;
+        case '/':
+            if (num2 == 0) {
+                printf("ERROR: DIVIDE BY ZERO\n");
+                break;
+            }
+            else {
+                printf("%f", num / num2);
+                break;
+            }
+    }
+    return 0;
 }
 
