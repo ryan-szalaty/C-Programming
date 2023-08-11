@@ -1,42 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node {
+    int number;
+    struct node *next;
+} node;
+
 int main(void)
 {
-    /*
-    int list[] = {1, 2, 3};
-    int length = sizeof(list) / sizeof(list[0]);
-    for (int i = 0; i < length; i++) {
-        printf("%i", list[i]);
+    node *list = NULL;
+
+    node *n = malloc(sizeof(node));
+
+    if (n == NULL) {
+        return 1;
     }
-    */
-    int *list = malloc(3 * sizeof(int));
-    if (list == NULL)
-    {
-        perror("No list found. Returning...");
+    n->number = 1;
+    n->next = NULL;
+
+    list = n;
+
+    n = malloc(sizeof(n));
+    if (n == NULL) {
         free(list);
         return 1;
     }
+    n->number = 2;
+    n->next = NULL;
 
-    list[0] = 1;
-    list[1] = 2;
-    list[2] = 3;
+    list->next = n;
 
-    //Need an array of 4
-
-    //int *temp = malloc(4 * sizeof(int)); Possible, but not as efficient
-    int *temp = realloc(list, 4 * sizeof(int)); //Using realloc automatically frees old memory
-    if (temp == NULL)
-    {
-        perror("No list found. Returning...");
+    n = malloc(sizeof(n));
+    if (n == NULL) {
+        free(list->next);
         free(list);
         return 1;
     }
-    temp[3] = 4;
-    list = temp;
-    for (int i = 0; i < 4; i++) {
-        printf("%i", list[i]);
+    n->number = 3;
+    n->next = NULL;
+    list->next->next = n;
+
+    for (node *temp = list; temp != NULL; temp = temp->next) {
+        printf("%i", temp->number);
     }
-    
-    free(list);
+
+    while(list != NULL) {
+        node *temp = list->next;
+        free(list);
+        list = temp;
+    }
+    return 0;
 }
