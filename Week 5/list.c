@@ -1,50 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
+typedef struct node
+{
     int number;
     struct node *next;
 } node;
+
+int check_node(int number, node **list)
+{
+    node *new_node = malloc(sizeof(node));
+    if (new_node == NULL)
+    {
+        perror("Could not allocate memory for another node.");
+        return 1;
+    }
+    new_node->number = number;
+    new_node->next = *list;
+    *list = new_node;
+    return 0;
+}
 
 int main(void)
 {
     node *list = NULL;
 
-    node *n = malloc(sizeof(node));
-
-    if (n == NULL) {
-        return 1;
-    }
-    n->number = 1;
-    n->next = NULL;
-
-    list = n;
-
-    n = malloc(sizeof(n));
-    if (n == NULL) {
-        free(list);
-        return 1;
-    }
-    n->number = 2;
-    n->next = NULL;
-
-    list->next = n;
-
-    n = malloc(sizeof(n));
-    if (n == NULL) {
-        free(list->next);
-        free(list);
-        return 1;
-    }
-    n->number = 3;
-    n->next = NULL;
-    list->next->next = n;
-
-    for (node *temp = list; temp != NULL; temp = temp->next) {
-        printf("%i", temp->number);
+    for (int i = 5; i > 0; i--) {
+        check_node(i, &list);
     }
 
-    while(list != NULL) {
+    for (node *temp = list; temp != NULL; temp = temp->next)
+    {
+        printf("%i ", temp->number);
+    }
+
+    while (list != NULL)
+    {
         node *temp = list->next;
         free(list);
         list = temp;
