@@ -1,0 +1,1 @@
+SELECT ROUND(AVG(energy), 2) AS average_energy FROM songs
