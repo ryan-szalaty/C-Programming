@@ -1,0 +1,1 @@
+SELECT title, year FROM movies WHERE year >= 2018 AND title NOT REGEXP '^[^a-zA-Z0-9]+' ORDER BY title DESC
