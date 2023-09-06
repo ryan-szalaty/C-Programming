@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>Total Registered Atheletes:</h1>
+
+{% for name in registrants %}
+    <p>{{name}}, {{registrants[name]}}</p>
+{% endfor %}
+
+{% endblock %}
