@@ -22,22 +22,22 @@ def after_request(response):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    conn = sqlite3.connect('birthdays.db')
-    cursor = conn.cursor()
     if request.method == "POST":
 
         name = request.form.get("name")
         month = request.form.get("month")
         day = request.form.get("day")
 
-        cursor.execute("INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)", (name, month, day))
+        with sqlite3.connect('birthdays.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)", (name, month, day))
 
         return redirect("/")
     else:
-        cursor.execute("SELECT * FROM birthdays")
-        rows = cursor.fetchall()
-        conn.close()
-
+        with sqlite3.connect('birthdays.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM birthdays")
+            rows = cursor.fetchall()
         return render_template("index.html", rows=rows)
 
 
